@@ -15,8 +15,19 @@ import MyCourses from './pages/MyCourses';
 import UserProfile from './pages/UserProfile';
 import CourseLearning from './pages/CourseLearning';
 import Certificate from './pages/Certificate';
+import ManageCoursesList from './pages/ManageCoursesList';
+import ManageCourseForm from './pages/ManageCourseForm';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchCourses } from './store/redux/courseSlice';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCourses());
+  }, [dispatch]);
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -34,6 +45,9 @@ function App() {
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/course/:id/learn" element={<CourseLearning />} />
       <Route path="/certificate" element={<Certificate />} />
+      <Route path="/manage-courses" element={<ManageCoursesList />} />
+      <Route path="/manage-courses/add" element={<ManageCourseForm />} />
+      <Route path="/manage-courses/edit/:id" element={<ManageCourseForm />} />
     </Routes>
   );
 }
