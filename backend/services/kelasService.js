@@ -1,8 +1,27 @@
 const prisma = require("../config/db");
 
 const kelasService = {
-  getAllKelas: async () => {
+  getAllKelas: async (query = {}) => {
+    const { filter, search, sortBy, order } = query;
+
+    const where = {};
+
+    if (filter) {
+      where.kategoriId = parseInt(filter);
+    }
+
+    if (search) {
+      where.judul = { contains: search };
+    }
+
+    const orderBy = {};
+    if (sortBy) {
+      orderBy[sortBy] = order === "desc" ? "desc" : "asc";
+    }
+
     return await prisma.kelas.findMany({
+      where,
+      orderBy: sortBy ? orderBy : undefined,
       include: {
         kategori: true,
         tutor: true,

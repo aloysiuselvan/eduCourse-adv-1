@@ -33,3 +33,7 @@ Thumbs.db
 .env.*.local
 *.env
 **/.env
+
+# Uploads
+backend/upload/*
+!backend/upload/.gitkeep
